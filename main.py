@@ -1,0 +1,59 @@
+from calendar import TextCalendar
+import datetime
+from colorama import init, Fore, Back, Style
+import time
+
+# Initialize colorama
+init()
+
+# ASCII Art Banner
+banner = f"""
+{Fore.CYAN}╔══════════════════════════════════════╗
+║        CALENDAR ASSISTANT           ║
+╚══════════════════════════════════════╝{Style.RESET_ALL}
+"""
+
+# Loading animation
+def loading_animation():
+    print(f"{Fore.YELLOW}Loading calendar", end="")
+    for _ in range(3):
+        time.sleep(0.5)
+        print(".", end="", flush=True)
+    print(Style.RESET_ALL)
+
+# Print banner
+print(banner)
+
+# Get user input with colored prompts
+try:
+    year = int(input(f"{Fore.GREEN}Enter Year: {Style.RESET_ALL}"))
+    month = int(input(f"{Fore.GREEN}Enter Month (1-12): {Style.RESET_ALL}"))
+    day = int(input(f"{Fore.GREEN}Enter Day: {Style.RESET_ALL}"))
+
+    # Show loading animation
+    loading_animation()
+
+    # Create calendar object
+    cal = TextCalendar()
+
+    # Print the month calendar with styling
+    print(f"\n{Fore.CYAN}═══════════════════════════════════{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Calendar for {datetime.datetime(year, month, day).strftime('%B %Y')}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}═══════════════════════════════════{Style.RESET_ALL}")
+    print(f"{Fore.MAGENTA}Mo Tu We Th Fr Sa Su{Style.RESET_ALL}")
+    print(f"{Fore.WHITE}{cal.formatmonth(year, month, w=2, l=1)}{Style.RESET_ALL}")
+
+    # Print the specific date information
+    date = datetime.datetime(year, month, day)
+    print(f"\n{Fore.CYAN}═══════════════════════════════════{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}Selected Date: {Fore.WHITE}{date.strftime('%A, %B %d, %Y')}{Style.RESET_ALL}")
+    print(f"{Fore.CYAN}═══════════════════════════════════{Style.RESET_ALL}")
+
+    # Print the full year calendar
+    print(f"\n{Fore.YELLOW}Full Year Calendar:{Style.RESET_ALL}")
+    print(f"{Fore.WHITE}{cal.formatyear(year, 2, 1, 8, 3)}{Style.RESET_ALL}")
+
+except ValueError:
+    print(f"{Fore.RED}Error: Please enter valid numbers for date.{Style.RESET_ALL}")
+except Exception as e:
+    print(f"{Fore.RED}An error occurred: {str(e)}{Style.RESET_ALL}")
